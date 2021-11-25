@@ -1,16 +1,41 @@
 import { FlexProps } from "@chakra-ui/layout";
-import { Button, ButtonProps, Flex, useColorModeValue } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonProps,
+  Flex,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useDockAnimation } from "@hooks";
-import { motion, MotionValue } from "framer-motion";
+import { motion, MotionValue, Variants } from "framer-motion";
+import { useAtomValue } from "jotai/utils";
+import Link from "next/link";
 import * as React from "react";
+import { IconType } from "react-icons";
+import { sizeAtom, zoomAtom } from "../../pages/settings";
 
 type BottomNavItemProps = FlexProps & {
-  item: any;
+  item: {
+    icon: IconType;
+    label: string;
+    href: string;
+  };
   mouseX: MotionValue<number | null>;
 };
 
 const MotionButton = motion<ButtonProps>(Button);
 const MotionFlex = motion<FlexProps>(Flex);
+
+const variants: Variants = {
+  hidden: {
+    opacity: 0,
+    display: "none",
+  },
+  hover: {
+    opacity: 1,
+    display: "block",
+  },
+};
 
 const BottomNavItem = ({
   item,
@@ -19,32 +44,57 @@ const BottomNavItem = ({
 }: BottomNavItemProps): JSX.Element => {
   const el = React.useRef<HTMLImageElement>(null);
 
-  const { width } = useDockAnimation(mouseX, el);
+  const zoom = useAtomValue(zoomAtom);
+  const size = useAtomValue(sizeAtom);
+
+  const { width } = useDockAnimation(mouseX, el, zoom, size);
 
   const bg = useColorModeValue("white", "gray.800");
+  const tooltipBg = useColorModeValue("gray.800", "white");
 
   const Icon = item.icon;
 
   return (
     <MotionFlex width="auto" pos="relative" justify="flex-end" flexDir="column">
-      <MotionButton
-        px={0}
-        ref={el}
-        bg={bg}
-        style={{
-          width,
-          height: width,
-          willChange: "width",
-        }}
-        rounded="md"
-        align="center"
-        justify="center"
-        transformOrigin="bottom"
-        sx={{ "& svg": { width: "50%", height: "50%" } }}
-        {...rest}
-      >
-        <Icon />
-      </MotionButton>
+      <Link href={item.href} passHref>
+        <MotionButton
+          px={0}
+          ref={el}
+          bg={bg}
+          style={{
+            width,
+            height: width,
+            willChange: "width",
+          }}
+          rounded="md"
+          align="center"
+          justify="center"
+          transformOrigin="bottom"
+          whileHover="hover"
+          initial="hidden"
+          animate="hidden"
+          position="relative"
+          sx={{ "& svg": { width: "50%", height: "50%" } }}
+          {...rest}
+        >
+          <MotionFlex
+            py={1}
+            px={2}
+            top={-9}
+            color={bg}
+            rounded="md"
+            bg={tooltipBg}
+            pos="absolute"
+            borderWidth={1}
+            variants={variants}
+          >
+            <Text fontSize="sm" fontWeight="light">
+              {item.label}
+            </Text>
+          </MotionFlex>
+          <Icon />
+        </MotionButton>
+      </Link>
     </MotionFlex>
   );
 };

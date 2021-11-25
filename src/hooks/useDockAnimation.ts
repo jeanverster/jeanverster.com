@@ -7,31 +7,31 @@ import {
 import { RefObject } from "react";
 import { useRaf } from ".";
 
-const baseWidth = 48;
-const distanceLimit = baseWidth * 6;
-const beyondTheDistanceLimit = distanceLimit + 1;
-
-const distanceInput = [
-  -distanceLimit,
-  -distanceLimit / 1.25,
-  -distanceLimit / 2,
-  0,
-  distanceLimit / 2,
-  distanceLimit / 1.25,
-  distanceLimit,
-];
-
-const factor = (increment: number) => {
-  const step = 8;
-  const toValue = increment * step + baseWidth;
-  return toValue / baseWidth;
-};
-
 export const useDockAnimation = (
   mouseX: MotionValue<number | null>,
   ref: RefObject<HTMLImageElement>,
-  magnification = 3
+  magnification = 3,
+  baseWidth = 48
 ) => {
+  const distanceLimit = baseWidth * 6;
+  const beyondTheDistanceLimit = distanceLimit + 1;
+
+  const factor = (increment: number) => {
+    const step = 8;
+    const toValue = increment * step + baseWidth;
+    return toValue / baseWidth;
+  };
+
+  const distanceInput = [
+    -distanceLimit,
+    -distanceLimit / 1.25,
+    -distanceLimit / 2,
+    0,
+    distanceLimit / 2,
+    distanceLimit / 1.25,
+    distanceLimit,
+  ];
+
   const distance = useMotionValue(beyondTheDistanceLimit);
 
   const widthOutput = [
