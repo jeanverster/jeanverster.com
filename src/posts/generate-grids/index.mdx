@@ -1,90 +1,120 @@
 ---
-title: Generate Grids in React using CSS Grid
+title: How to generate grids in React using CSS grid
 date: 27-11-2021
-description: This is some description
+description: Build your own handy reusable CSS grid generator for React
+cover: "/img/blog/generate-grids/generate-grids-QKTOJ7XA.webp"
 isPublished: true
 ---
 
+![generate css grids cover photo](./images/generate-grids.webp)
+
+I’m sure we’ve all been there before, you’re building out a screen
+and you find yourself writing out the same code over and over again
+to make a grid — Row, Column, Column, Row, Column, Column… You get
+the idea.
+
+But what if you could use CSS Grid to make your life easier?
+
 <br />
-<p>
-  I’m sure we’ve all been there before, you’re building out a screen
-  and you find yourself writing out the same code over and over again
-  to make a grid — Row, Column, Column, Row, Column, Column… You get
-  the idea.
-</p>
+import GridGeneratorDemo from "./components/GridGeneratorDemo";
+
+<GridGeneratorDemo />
 <br />
-<p>But what if you could use CSS Grid to make your life easier?</p>
-<br />
+
+If you’re like me then you’ve probably figured there has to be a
+cleaner & less pain staking way to create these grids. Turns out,
+there is! Now this is not necessarily a new technique, it has been
+around for quite a while. Using vanilla JS and html you were able to
+write a loop which generated an html string, inserting a at every
+nth interval to close and then reopen the html tag, then rendering
+said string as html.
+
+In React, however, this approach wouldn’t work as you aren’t able to
+render JSX as a string. I had initially scratched my head a bit on
+how you would go about achieving this, I felt that the most
+intuitive way to use such a component would be to simply pass the
+content you want to render as children and then our component would
+handle all the grid generation stuff. Lucky for us React has some
+handy methods for dealing with and manipulating child components!
+
+For the sake of this tutorial, I’m using the react-flexbox-grid
+package, but feel free to use any grid system you prefer — the logic
+remains the same.
+
+With that said, let’s have a look at the code:
 
 ```tsx
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { chunk } from "lodash";
 import * as React from "react";
-import { motion } from "framer-motion";
-import { RiArrowUpDownLine } from "react-icons/ri";
+import { Col, Row, Grid } from "react-flexbox-grid";
 
-const GridGeneratorDemo = (): JSX.Element => {
-  const { isOpen, onToggle } = useDisclosure();
+type GridGeneratorProps = {
+  cols: 1 | 2 | 3 | 4 | 6 | 12;
+};
 
+const GridGenerator = ({ cols, children }: GridGeneratorProps) => {
+  const colWidth = 12 / cols;
+  const rows = chunk(React.Children.toArray(children), cols);
   return (
-    <Flex p={5} flexDir="column" justify="center">
-      <Heading>Hey! I&apos;m some mdx</Heading>
-      <motion.div animate={{ rotate: isOpen ? 90 : 0 }}>
-        <Box shadow="lg" m={4} rounded="large" bg="blue.500">
-          <Box as={RiArrowUpDownLine} size="48px" color="white" />
-        </Box>
-      </motion.div>
-      <Button onClick={onToggle}>Click Me</Button>
-    </Flex>
+    <Grid>
+      {rows.map((cols) => (
+        <Row>
+          {cols.map((col) => (
+            <Col sm={12} md={colWidth}>
+              {col}
+            </Col>
+          ))}
+        </Row>
+      ))}
+    </Grid>
   );
 };
 
-export default GridGeneratorDemo;
+export default GridGenerator;
 ```
 
 <br />
-<p>
-  I’m sure we’ve all been there before, you’re building out a screen
-  and you find yourself writing out the same code over and over again
-  to make a grid — Row, Column, Column, Row, Column, Column… You get
-  the idea.
-</p>
-<br />
-<p>But what if you could use CSS Grid to make your life easier?</p>
-<br />
-<br />
-<p>
-  I’m sure we’ve all been there before, you’re building out a screen
-  and you find yourself writing out the same code over and over again
-  to make a grid — Row, Column, Column, Row, Column, Column… You get
-  the idea.
-</p>
-<br />
-<p>But what if you could use CSS Grid to make your life easier?</p>
-<br />
+Let’s break down what’s happening here:
+
+Our component accepts a cols prop which needs to be a factor of 12
+(to match the Bootstrap grid structure) — as the name suggests this
+will determine the number of columns we want in our grid. The
+colWidth variable is what we’ll use for the Bootstrap class.
+
+To create the rows we make use of the React.Children.toArray method,
+this allows us to convert the children into an array that we can
+then manipulate.
+
+Usage is simple, just pass all the content you want rendered as
+children to our GridGenerator component:
+
+```tsx
+<GridGenerator cols={3}>
+  <Field
+    name="firstName"
+    label="First Name"
+    component={ConnectedDatePicker}
+  />
+  <Field
+    name="lastName"
+    label="Last Name"
+    component={ConnectedFormGroup}
+  />
+  <Field
+    name="email"
+    type="email"
+    label="Email"
+    component={ConnectedFormGroup}
+  />
+  <Field
+    name="phoneNumber"
+    label="Phone Number"
+    component={ConnectedFormGroup}
+  />
+</GridGenerator>
+```
 
 <br />
-<p>
-  I’m sure we’ve all been there before, you’re building out a screen
-  and you find yourself writing out the same code over and over again
-  to make a grid — Row, Column, Column, Row, Column, Column… You get
-  the idea.
-</p>
-<br />
-<p>But what if you could use CSS Grid to make your life easier?</p>
-<br />
-<br />
-<p>
-  I’m sure we’ve all been there before, you’re building out a screen
-  and you find yourself writing out the same code over and over again
-  to make a grid — Row, Column, Column, Row, Column, Column… You get
-  the idea.
-</p>
-<br />
-<p>But what if you could use CSS Grid to make your life easier?</p>
+That’s it! You’re all set to generate dynamic grids using your handy new
+`GridGenerator` component 🙌
 <br />
