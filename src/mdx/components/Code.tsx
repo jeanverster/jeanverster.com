@@ -1,8 +1,8 @@
 import { useColorMode } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import Highlight, { defaultProps } from "prism-react-renderer";
-import darkTheme from "prism-react-renderer/themes/nightOwl";
-import lightTheme from "prism-react-renderer/themes/nightOwlLight";
+import darkTheme from "prism-react-renderer/themes/dracula";
+import lightTheme from "prism-react-renderer/themes/vsLight";
 import React from "react";
 
 const Pre = styled.pre`
@@ -64,7 +64,13 @@ export const Code: React.FC<ICode> = (props) => {
       code={props.codeString}
       language="jsx"
     >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+      {({
+        className,
+        style,
+        tokens,
+        getLineProps,
+        getTokenProps,
+      }) => (
         <Pre className={className} style={style}>
           <LanguageFlag>{props.language.toUpperCase()}</LanguageFlag>
           {tokens.map((line, i) => (
@@ -72,7 +78,10 @@ export const Code: React.FC<ICode> = (props) => {
               <LineNo>{i + 1}</LineNo>
               <LineContent>
                 {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token, key })} />
+                  <span
+                    key={key}
+                    {...getTokenProps({ token, key })}
+                  />
                 ))}
               </LineContent>
             </Line>
@@ -102,7 +111,8 @@ export const preToCodeBlock = (
     preProps.children.type === "code"
   ) {
     // we have a <pre><code> situation
-    const { children: codeString, className = "" } = preProps.children.props;
+    const { children: codeString, className = "" } =
+      preProps.children.props;
 
     const matches = className.match(/language-(?<lang>.*)/);
 

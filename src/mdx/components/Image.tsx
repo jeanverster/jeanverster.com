@@ -1,9 +1,9 @@
-import { HalfBleed } from "@layouts/PostLayout";
+import { Box } from "@chakra-ui/react";
 import Image, { ImageProps } from "next/image";
 
 export const Img = (props: ImageProps) => {
   return (
-    <HalfBleed>
+    <Box mb={4}>
       <Image
         {...props}
         alt="blog-image"
@@ -11,6 +11,6 @@ export const Img = (props: ImageProps) => {
         height="50%"
         layout="responsive"
       />
-    </HalfBleed>
+    </Box>
   );
 };

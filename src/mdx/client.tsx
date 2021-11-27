@@ -1,4 +1,5 @@
 import * as chakraButtons from "@chakra-ui/button";
+import * as chakraColorMode from "@chakra-ui/color-mode";
 import * as chakraHooks from "@chakra-ui/hooks";
 import * as chakraLayout from "@chakra-ui/layout";
 import * as framer from "framer-motion";
@@ -10,7 +11,12 @@ export const MDX = ({ source }: { source: string }) => {
   const Component = useMemo(
     () =>
       getMDXComponent(source, {
-        chakra: { ...chakraLayout, ...chakraHooks, ...chakraButtons },
+        chakra: {
+          ...chakraLayout,
+          ...chakraHooks,
+          ...chakraButtons,
+          ...chakraColorMode,
+        },
         framer,
       }),
     [source]

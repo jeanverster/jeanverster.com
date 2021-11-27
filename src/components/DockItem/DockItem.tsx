@@ -14,7 +14,7 @@ import * as React from "react";
 import { IconType } from "react-icons";
 import { sizeAtom, zoomAtom } from "../../pages/settings";
 
-type BottomNavItemProps = FlexProps & {
+type DockItemProps = FlexProps & {
   item: {
     icon: IconType;
     label: string;
@@ -37,11 +37,11 @@ const variants: Variants = {
   },
 };
 
-const BottomNavItem = ({
+const DockItem = ({
   item,
   mouseX,
   ...rest
-}: BottomNavItemProps): JSX.Element => {
+}: DockItemProps): JSX.Element => {
   const el = React.useRef<HTMLImageElement>(null);
 
   const zoom = useAtomValue(zoomAtom);
@@ -55,7 +55,12 @@ const BottomNavItem = ({
   const Icon = item.icon;
 
   return (
-    <MotionFlex width="auto" pos="relative" justify="flex-end" flexDir="column">
+    <MotionFlex
+      width="auto"
+      pos="relative"
+      justify="flex-end"
+      flexDir="column"
+    >
       <Link href={item.href} passHref>
         <MotionButton
           px={0}
@@ -68,6 +73,7 @@ const BottomNavItem = ({
             height: width,
             willChange: "width",
           }}
+          aria-label={item.label}
           rounded="md"
           align="center"
           justify="center"
@@ -101,4 +107,4 @@ const BottomNavItem = ({
   );
 };
 
-export default BottomNavItem;
+export default DockItem;

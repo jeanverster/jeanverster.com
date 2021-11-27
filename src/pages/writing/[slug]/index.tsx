@@ -1,13 +1,14 @@
 import { Page } from "@layouts";
 import { MDX } from "@mdx/client";
 import { getPost, getPosts } from "@mdx/server";
+import { FrontMatter } from "@types";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQueryInput } from "querystring";
 import * as React from "react";
 
 type PostDetailProps = {
   code: string;
-  frontmatter: any;
+  frontmatter: FrontMatter;
 };
 
 const PostDetail: NextPage<PostDetailProps> = (

@@ -1,4 +1,5 @@
 import * as chakraButtons from "@chakra-ui/button";
+import * as chakraColorMode from "@chakra-ui/color-mode";
 import * as chakraHooks from "@chakra-ui/hooks";
 import * as chakraLayout from "@chakra-ui/layout";
 import * as framerMotion from "framer-motion";
@@ -13,16 +14,24 @@ const chakra = Object.keys({
   ...chakraHooks,
   ...chakraLayout,
   ...chakraButtons,
+  ...chakraColorMode,
 }).filter((key) => key !== "__esModule");
 
-const framer = Object.keys(framerMotion).filter((key) => key !== "__esModule");
+const framer = Object.keys(framerMotion).filter(
+  (key) => key !== "__esModule"
+);
 
-const ri = Object.keys(reactIconsRI).filter((key) => key !== "__esModule");
+const ri = Object.keys(reactIconsRI).filter(
+  (key) => key !== "__esModule"
+);
 
 const POSTS_PATH = path.join(process.cwd(), "src/posts");
 
 export const getSourceOfFile = (filePath: string) => {
-  return fs.readFileSync(path.join(POSTS_PATH, filePath, "index.mdx"), "utf-8");
+  return fs.readFileSync(
+    path.join(POSTS_PATH, filePath, "index.mdx"),
+    "utf-8"
+  );
 };
 
 export const getPosts = () => {
@@ -41,16 +50,7 @@ export const getPosts = () => {
     .filter((posts) => !!posts.frontmatter.isPublished);
 };
 
-type IncludeComponents = {
-  chakra?: string[];
-  framer?: string[];
-  reactIcons?: string[];
-};
-
-export const getPost = async (
-  slug: string,
-  inlcudeComponents: IncludeComponents = {}
-) => {
+export const getPost = async (slug: string) => {
   const source = getSourceOfFile(slug);
   const imagesUrl = `/img/blog/${slug}`;
   const directory = path.join(POSTS_PATH, slug);
@@ -95,8 +95,9 @@ export const getPost = async (
       };
 
       options.publicPath = imagesUrl;
+      console.log(options.publicPath);
       options.write = true;
-
+      console.log(options);
       return options;
     },
     globals: {
