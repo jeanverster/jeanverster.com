@@ -62,7 +62,9 @@ const BottomNavItem = ({
           ref={el}
           bg={bg}
           style={{
+            // @ts-ignore
             width,
+            // @ts-ignore
             height: width,
             willChange: "width",
           }}

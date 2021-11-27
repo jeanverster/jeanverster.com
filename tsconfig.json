@@ -18,8 +18,14 @@
     "paths": {
       "@components": ["src/components"],
       "@components/*": ["src/components/*"],
+      "@config": ["src/config"],
+      "@config/*": ["src/config/*"],
+      "@hooks": ["src/hooks"],
+      "@hooks/*": ["src/hooks/*"],
       "@layouts": ["src/layouts"],
-      "@hooks": ["src/hooks"]
+      "@layouts/*": ["src/layouts/*"],
+      "@mdx": ["src/mdx"],
+      "@mdx/*": ["src/mdx/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

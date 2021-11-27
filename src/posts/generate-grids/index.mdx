@@ -1,0 +1,90 @@
+---
+title: Generate Grids in React using CSS Grid
+date: 27-11-2021
+description: This is some description
+isPublished: true
+---
+
+<br />
+<p>
+  I’m sure we’ve all been there before, you’re building out a screen
+  and you find yourself writing out the same code over and over again
+  to make a grid — Row, Column, Column, Row, Column, Column… You get
+  the idea.
+</p>
+<br />
+<p>But what if you could use CSS Grid to make your life easier?</p>
+<br />
+
+```tsx
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  useDisclosure,
+} from "@chakra-ui/react";
+import * as React from "react";
+import { motion } from "framer-motion";
+import { RiArrowUpDownLine } from "react-icons/ri";
+
+const GridGeneratorDemo = (): JSX.Element => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  return (
+    <Flex p={5} flexDir="column" justify="center">
+      <Heading>Hey! I&apos;m some mdx</Heading>
+      <motion.div animate={{ rotate: isOpen ? 90 : 0 }}>
+        <Box shadow="lg" m={4} rounded="large" bg="blue.500">
+          <Box as={RiArrowUpDownLine} size="48px" color="white" />
+        </Box>
+      </motion.div>
+      <Button onClick={onToggle}>Click Me</Button>
+    </Flex>
+  );
+};
+
+export default GridGeneratorDemo;
+```
+
+<br />
+<p>
+  I’m sure we’ve all been there before, you’re building out a screen
+  and you find yourself writing out the same code over and over again
+  to make a grid — Row, Column, Column, Row, Column, Column… You get
+  the idea.
+</p>
+<br />
+<p>But what if you could use CSS Grid to make your life easier?</p>
+<br />
+<br />
+<p>
+  I’m sure we’ve all been there before, you’re building out a screen
+  and you find yourself writing out the same code over and over again
+  to make a grid — Row, Column, Column, Row, Column, Column… You get
+  the idea.
+</p>
+<br />
+<p>But what if you could use CSS Grid to make your life easier?</p>
+<br />
+
+<br />
+<p>
+  I’m sure we’ve all been there before, you’re building out a screen
+  and you find yourself writing out the same code over and over again
+  to make a grid — Row, Column, Column, Row, Column, Column… You get
+  the idea.
+</p>
+<br />
+<p>But what if you could use CSS Grid to make your life easier?</p>
+<br />
+<br />
+<p>
+  I’m sure we’ve all been there before, you’re building out a screen
+  and you find yourself writing out the same code over and over again
+  to make a grid — Row, Column, Column, Row, Column, Column… You get
+  the idea.
+</p>
+<br />
+<p>But what if you could use CSS Grid to make your life easier?</p>
+<br />

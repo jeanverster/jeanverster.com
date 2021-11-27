@@ -23,12 +23,12 @@ export const BottomNav = ({ items }: BottomNavProps): JSX.Element => {
   const x = useMotionValue<number | null>(null);
 
   const size = useAtomValue(sizeAtom);
-  console.log("size", size);
 
   return (
     <MotionFlex
       initial={{ y: 200 }}
       animate={{ y: 0 }}
+      // @ts-ignore
       transition={{ type: "spring", stiffness: 80, damping: 20 }}
       sx={{
         bg,

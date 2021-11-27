@@ -1,12 +1,11 @@
 import { ChakraProvider, Flex } from "@chakra-ui/react";
 import { BottomNav } from "@components";
-import "@fontsource/crimson-text/400.css";
-import "@fontsource/crimson-text/700.css";
-import "@fontsource/work-sans/400.css";
-import "@fontsource/work-sans/700.css";
-import { useAtomValue } from "jotai/utils";
+import "@fontsource/josefin-sans/400.css";
+import "@fontsource/josefin-sans/700.css";
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
+import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
-import Image from "next/image";
 import {
   RiGithubLine,
   RiHome2Line,
@@ -14,7 +13,6 @@ import {
   RiQuillPenLine,
   RiSettings2Line,
 } from "react-icons/ri";
-import { wallpaperAtom } from "../components/WallpaperSelect/index";
 import theme from "../theme";
 
 const NAV_ITEMS = [
@@ -46,28 +44,9 @@ const NAV_ITEMS = [
 ];
 
 function App({ Component, pageProps }: AppProps) {
-  const wallpaper = useAtomValue(wallpaperAtom);
   return (
     <ChakraProvider theme={theme}>
-      {wallpaper?.src && (
-        <Flex
-          sx={{
-            zIndex: -1,
-            pos: "fixed",
-            width: "100vw",
-            height: "100vh",
-            overflow: "hidden",
-          }}
-        >
-          <Image
-            alt="Mountains"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-            src={wallpaper?.src}
-          />
-        </Flex>
-      )}
+      <DefaultSeo />
       <Component {...pageProps} />
       <Flex
         pos="fixed"
