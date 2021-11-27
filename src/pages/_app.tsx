@@ -1,47 +1,13 @@
 import { ChakraProvider, Flex } from "@chakra-ui/react";
-import { BottomNav } from "@components";
+import { Dock } from "@components";
+import { DOCK_ITEMS } from "@config/dock";
 import "@fontsource/josefin-sans/400.css";
 import "@fontsource/josefin-sans/700.css";
 import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
 import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
-import {
-  RiGithubLine,
-  RiHome2Line,
-  RiImageLine,
-  RiQuillPenLine,
-  RiSettings2Line,
-} from "react-icons/ri";
 import theme from "../theme";
-
-const NAV_ITEMS = [
-  {
-    icon: RiHome2Line,
-    label: "Home",
-    href: "/",
-  },
-  {
-    icon: RiImageLine,
-    label: "Photos",
-    href: "/photos",
-  },
-  {
-    icon: RiQuillPenLine,
-    label: "Writing",
-    href: "/writing",
-  },
-  {
-    icon: RiGithubLine,
-    label: "Projects",
-    href: "/projects",
-  },
-  {
-    icon: RiSettings2Line,
-    label: "Settings",
-    href: "/settings",
-  },
-];
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -56,7 +22,7 @@ function App({ Component, pageProps }: AppProps) {
         justify="center"
         align="center"
       >
-        <BottomNav items={NAV_ITEMS} />
+        <Dock items={DOCK_ITEMS} />
       </Flex>
     </ChakraProvider>
   );

@@ -28,7 +28,7 @@ export const Page = ({
   const { back } = useRouter();
   return (
     <Flex bg={bg} {...rest}>
-      <Container pt="12vmin" pb="96px" maxW="container.sm">
+      <Container pt="12vmin" pb="128px" maxW="container.sm">
         {showBackButton && (
           <IconButton
             size="sm"
@@ -40,8 +40,8 @@ export const Page = ({
         )}
 
         <Heading mb={4}>{title}</Heading>
-        <Text>{description}</Text>
-        <Divider my={4} />
+        <Text fontWeight="bold">{description}</Text>
+        <Divider my={6} />
         {children}
       </Container>
     </Flex>

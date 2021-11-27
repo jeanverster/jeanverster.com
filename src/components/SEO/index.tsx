@@ -1,8 +1,9 @@
-import siteConfig from "@config/siteConfig";
+import siteConfig from "@config/site";
 import { NextSeo, NextSeoProps } from "next-seo";
 import React from "react";
 
-export interface SEOProps extends Pick<NextSeoProps, "title" | "description"> {}
+export interface SEOProps
+  extends Pick<NextSeoProps, "title" | "description"> {}
 
 const SEO = ({ title, description }: SEOProps) => (
   <NextSeo

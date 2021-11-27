@@ -5,9 +5,9 @@ import { useAtomValue } from "jotai/utils";
 import * as React from "react";
 import { IconType } from "react-icons";
 import { sizeAtom } from "../../pages/settings";
-import BottomNavItem from "../BottomNavItem/BottomNavItem";
+import DockItem from "../DockItem/DockItem";
 
-type BottomNavProps = {
+type DockProps = {
   items: {
     icon: IconType;
     label: string;
@@ -17,7 +17,7 @@ type BottomNavProps = {
 
 const MotionFlex = motion<FlexProps>(Flex);
 
-export const BottomNav = ({ items }: BottomNavProps): JSX.Element => {
+export const Dock = ({ items }: DockProps): JSX.Element => {
   const bg = useColorModeValue("blackAlpha.200", "whiteAlpha.200");
 
   const x = useMotionValue<number | null>(null);
@@ -58,7 +58,7 @@ export const BottomNav = ({ items }: BottomNavProps): JSX.Element => {
       <Flex height="100%" alignItems="flex-end">
         {items.map((item, i) => {
           return (
-            <BottomNavItem
+            <DockItem
               mouseX={x}
               item={item}
               key={item.href}
