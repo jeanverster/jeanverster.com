@@ -43,7 +43,6 @@ export default Writing;
 
 export const getStaticProps: GetStaticProps<WritingProps> = () => {
   const posts = getPosts();
-  console.log("posts", posts);
   return {
     props: { posts: JSON.parse(JSON.stringify(posts)) },
   };
