@@ -40,7 +40,7 @@ const LanguageFlag = styled(Flex)`
 `;
 
 type CodeProps = {
-  language: Language;
+  language: string;
   codeString: string;
   metaString: string;
   className: string;
@@ -57,7 +57,7 @@ export const Code = (props: CodeProps) => {
         {...defaultProps}
         theme={isDarkMode ? darkTheme : lightTheme}
         code={props.codeString}
-        language={props.language}
+        language={props.language as Language}
       >
         {({
           className,
