@@ -10,4 +10,6 @@ export type FrontMatter = {
   cover: string;
   tags: string[];
   isPublished: boolean;
+  coverLink: string;
+  coverAttribution: string;
 };

@@ -28,7 +28,12 @@ export const Page = ({
   const { back } = useRouter();
   return (
     <Flex bg={bg} {...rest}>
-      <Container pt="12vmin" pb="128px" maxW="container.sm">
+      <Container
+        px={[6, 0]}
+        pt={["12vmax", "12vmin"]}
+        pb="128px"
+        maxW="container.md"
+      >
         {showBackButton && (
           <IconButton
             size="sm"

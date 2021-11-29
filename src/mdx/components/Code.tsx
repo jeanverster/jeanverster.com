@@ -1,8 +1,11 @@
-import { useColorMode } from "@chakra-ui/react";
+import { Box, Flex, Text, useColorMode } from "@chakra-ui/react";
 import styled from "@emotion/styled";
-import Highlight, { defaultProps } from "prism-react-renderer";
+import Highlight, {
+  defaultProps,
+  Language,
+} from "prism-react-renderer";
 import darkTheme from "prism-react-renderer/themes/dracula";
-import lightTheme from "prism-react-renderer/themes/vsLight";
+import lightTheme from "prism-react-renderer/themes/nightOwlLight";
 import React from "react";
 
 const Pre = styled.pre`
@@ -11,7 +14,6 @@ const Pre = styled.pre`
   margin: 1em 0;
   padding: 0.5em;
   border-radius: 10px;
-  overflow: auto;
 `;
 
 const Line = styled.div`
@@ -30,65 +32,69 @@ const LineContent = styled.span`
   display: table-cell;
 `;
 
-const LanguageFlag = styled.div`
-  content: "";
+const LanguageFlag = styled(Flex)`
   position: absolute;
   background-color: inherit;
   text-align: center;
-  height: 50px;
-  width: 40px;
-  right: 8%;
-  top: -30px;
-  border-radius: 10px;
-  padding-top: 5px;
-  font-size: 19px;
   font-weight: 500;
 `;
 
-interface ICode {
-  language: string;
+type CodeProps = {
+  language: Language;
   codeString: string;
   metaString: string;
   className: string;
-}
+};
 
-export const Code: React.FC<ICode> = (props) => {
+export const Code = (props: CodeProps) => {
   const { colorMode } = useColorMode();
 
   const isDarkMode = colorMode === "dark";
 
   return (
-    <Highlight
-      {...defaultProps}
-      theme={isDarkMode ? darkTheme : lightTheme}
-      code={props.codeString}
-      language="jsx"
-    >
-      {({
-        className,
-        style,
-        tokens,
-        getLineProps,
-        getTokenProps,
-      }) => (
-        <Pre className={className} style={style}>
-          <LanguageFlag>{props.language.toUpperCase()}</LanguageFlag>
-          {tokens.map((line, i) => (
-            <Line key={i} {...getLineProps({ line, key: i })}>
-              <LineNo>{i + 1}</LineNo>
-              <LineContent>
-                {line.map((token, key) => (
-                  <span
-                    key={key}
-                    {...getTokenProps({ token, key })}
-                  />
-                ))}
-              </LineContent>
-            </Line>
-          ))}
-        </Pre>
-      )}
-    </Highlight>
+    <Box mb={8} mt={12}>
+      <Highlight
+        {...defaultProps}
+        theme={isDarkMode ? darkTheme : lightTheme}
+        code={props.codeString}
+        language={props.language}
+      >
+        {({
+          className,
+          style,
+          tokens,
+          getLineProps,
+          getTokenProps,
+        }) => (
+          <Pre className={className} style={style}>
+            <LanguageFlag
+              px={4}
+              py={2}
+              right={8}
+              rounded="md"
+              top={-8}
+            >
+              <Text fontSize="sm" fontWeight="bold">
+                {props.language.toUpperCase()}
+              </Text>
+            </LanguageFlag>
+            {tokens.map((line, i) => (
+              <Line key={i} {...getLineProps({ line, key: i })}>
+                <LineNo>{i + 1}</LineNo>
+                <LineContent>
+                  {line.map((token, key) => (
+                    <span
+                      key={key}
+                      {...getTokenProps({ token, key })}
+                    />
+                  ))}
+                </LineContent>
+              </Line>
+            ))}
+          </Pre>
+        )}
+      </Highlight>
+    </Box>
   );
 };
 

@@ -3,7 +3,7 @@ import Image, { ImageProps } from "next/image";
 
 export const Img = (props: ImageProps) => {
   return (
-    <Box mb={4}>
+    <Box mb={8} rounded="md" overflow="hidden">
       <Image
         {...props}
         alt="blog-image"

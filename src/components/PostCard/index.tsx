@@ -29,6 +29,7 @@ export const PostCard = ({
           },
         }}
         flexDir="column"
+        mb={8}
       >
         {!!cover && (
           <Flex
@@ -36,20 +37,20 @@ export const PostCard = ({
             pos="relative"
             overflow="hidden"
             width="100%"
-            height="16rem"
+            height="24rem"
             mb={4}
           >
             <Image src={cover} layout="fill" alt="blog-cover-image" />
           </Flex>
         )}
         <Flex flexDir="column" flex={2} py={4} borderBottomWidth={1}>
-          <Heading fontSize="xl" fontWeight="bold">
+          <Heading fontSize="2xl" fontWeight="bold">
             {title}
           </Heading>
           <Text mt={1} mb={2} fontSize="xs" fontWeight="bold">
             {date}
           </Text>
-          <Text mt={2} mb={4}>
+          <Text fontSize="lg" lineHeight="taller" mt={2} mb={4}>
             {description}
           </Text>
           <Button

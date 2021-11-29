@@ -1,0 +1,280 @@
+---
+title: How to set up Dark Mode in React Native with Styled Components
+date: 27-11-2021
+description: Easily configure color modes in your app
+cover: "/img/blog/dark-mode-styled-components/dark-mode-styled-components-QYYJJK5M.webp"
+isPublished: true
+coverLink: https://www.pexels.com/photo/road-in-city-during-sunset-248159
+coverAttribution: Photo by Nout Gons from Pexels
+---
+
+![dark mode styled components cover photo](./images/dark-mode-styled-components.webp)
+
+By now I’m sure you’ve noticed the latest trend which has been taking the app world by storm: Many of the companies we know and love, including Slack, Instagram, Medium, and many more, now offer users the ability to switch to a dark color theme. Both Apple and Google have added the same feature to their respective operating systems as well.
+So if you’ve ever wanted to implement color modes in your React Native app, this guide will show you one technique for achieving that.
+
+## Getting set up
+
+The first thing we need to do is configure our theme. In our theme object, we’ll nest a modes object inside the colors object. What’s important to note here is that the dark object has the same shape as the colors defined above it.
+We’ll also need to export our mode(s) as an array of strings so we can cycle through them. You may notice we also don’t have a light mode; this is because we’ll automatically be assigning the top-level colors to a default mode. Because we don’t have a default-mode object to reference directly, we need to manually add it in at the beginning using unshift. Now your theme object should look something like this:
+
+```ts
+colors: {
+  text: '#0A0A0A',
+  background: '#FFF',
+  primary: '#1476F2',
+  secondary: '#595959',
+  border: '#E2E8F0',
+  modes: {
+    dark: {
+      text: '#FFF',
+      background: '#141414',
+      primary: '#1476F2',
+      secondary: '#595959',
+      border: '#403A3A',
+    }
+  }
+}
+
+const modes = Object.keys(theme.colors.modes).map((key) => key)
+
+modes.unshift('default')
+
+export { theme, modes }
+```
+
+### Configuring context
+
+Next, if you haven’t already, you’ll want to wrap your app in the ThemeProvider from styled-components.
+
+```tsx
+import { ThemeProvider } from "styled-components";
+
+<ThemeProvider theme={theme}>
+  <App />
+</ThemeProvider>;
+```
+
+Now that our app can access our theme, we need to set up our own context provider to handle the logic for switching between themes and remembering the user’s preference:
+
+```tsx
+import * as React from "react";
+
+type AppContextType = {
+  mode: string;
+  toggleMode: () => void;
+};
+
+export const AppContext = React.createContext<
+  Partial<AppContextType>
+>({
+  mode: "default",
+});
+
+export const useAppContext = () => React.useContext(AppContext);
+
+const AppProvider: React.FC<AppContextType> = ({
+  children,
+  ...rest
+}) => {
+  return (
+    <AppContext.Provider value={{ ...rest }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export default AppProvider;
+```
+
+There’s nothing too fancy going on here. We’re just creating a context provider which takes two props, mode and toggleMode. Then we’re assigning mode a default value.
+We’re also exporting a custom hook called useAppContext, which is purely for convenience so we can access our AppProvider’s context without having to reference React.useContext(AppContext) each time.
+
+### Toggling modes
+
+As we can see above, our AppProvider component accepts two props, mode and toggleMode — we’ll define these below in our App.tsx file.
+
+```tsx
+import { modes } from "./src/theme";
+
+const [mode, setMode] = React.useState(modes[0]);
+
+const toggleMode = () => {
+  const i = (modes.indexOf(mode) + 1) % modes.length;
+  setMode(modes[i]);
+};
+
+<ThemeProvider theme={theme}>
+  <AppProvider mode={mode} toggleMode={toggleMode}>
+    <App />
+  </AppProvider>
+</ThemeProvider>;
+```
+
+So now we’re able to cycle through our modes array which we created earlier and set that value to a state.
+
+The next thing we’ll want to do is dynamically update our theme object based on the current active mode. We can achieve this using some helper functions from Lodash:
+
+```tsx
+import { modes, theme as baseTheme } from './src/theme'
+import { get, merge } from 'lodash'
+
+const getTheme = (mode) =>
+  merge({}, baseTheme, {
+    colors: get(baseTheme.colors.modes, mode, baseTheme.colors)
+  }
+
+const theme = getTheme(mode)
+
+<ThemeProvider theme={theme}>
+  <AppProvider mode={mode} toggleMode={toggleMode}>
+    <App />
+  </AppProvider>
+</ThemeProvider>
+```
+
+What’s great about this technique is that instead of managing two separate light/dark theme objects you’re able to add as many color modes as you like, and it’ll just cycle through them when you hit toggleMode. For example:
+
+```js
+modes: {
+  dark: {
+    text: '#fff',
+    background: '#000',
+    primary: '#0cf',
+    secondary: '#f0e',
+  },
+  cyan: {
+    text: '#023',
+    background: '#0ff',
+    primary: '#03c',
+    secondary: '#01a',
+  },
+  gray: {
+    text: '#eef',
+    background: '#333336',
+    primary: '#09f',
+    secondary: '#0bf',
+  }
+}
+```
+
+We’re just about done setting up the logic for toggling our color scheme. All that we still need to do is set the user’s preference to Async Storage so the next time the user opens the app, it’ll remember their preferred color mode:
+
+```tsx
+React.useEffect(() => {
+  async function getMode() {
+    const stored = await colorModeStorage.get();
+    setMode(stored);
+  }
+  getMode();
+}, []);
+
+React.useEffect(() => {
+  if (!mode) return;
+  colorModeStorage.set(mode);
+}, [mode]);
+```
+
+In the same App.tsx file where our toggleMode function lives, we’re adding two useEffect hooks.
+The first one runs on mount (note the empty dependency array) and is responsible for fetching the user’s preference from AsyncStorage and setting it to state.
+The other is for setting the new mode to AsyncStorage each time it’s updated. In terms of the colorModeStorage utility, it’s just an object containing some setter/getter functions:
+
+```ts
+export const colorModeStorage = {
+  get: async (): Promise<string | null> => {
+    return await AsyncStorage.getItem("MODE");
+  },
+  set: (mode: string): Promise<void> => {
+    return AsyncStorage.setItem("MODE", mode);
+  },
+};
+```
+
+Now that we’re all set up, the last thing we need to do is add a button/switch to our app that we’ll use to cycle through the modes. How you go about this, though, is up to you and is out of the scope of this tutorial.
+To make sure all your components respond well when you toggle color modes, be sure to always use colors from your theme. And because we’re using styled-system, you should reference colors from your theme like this:
+
+```tsx
+<Box bg="primary" />
+```
+
+That’s it. You can see the full App.tsx file below:
+
+```tsx
+import { get, merge } from "lodash";
+import * as React from "react";
+import { ThemeProvider } from "styled-components";
+import AppProvider from "./src/context";
+import AppNavigation from "./src/navigation";
+import { modes, theme as baseTheme } from "./src/theme";
+import { colorModeStorage } from "./src/utils";
+
+const AppWithProvider = () => {
+  const getTheme = (mode) =>
+    merge({}, baseTheme, {
+      colors: get(baseTheme.colors.modes, mode, baseTheme.colors),
+    });
+
+  const [mode, setMode] = React.useState(modes[0]);
+
+  React.useEffect(() => {
+    async function getMode() {
+      const stored = await colorModeStorage.get();
+      setMode(stored);
+    }
+    getMode();
+  }, []);
+
+  React.useEffect(() => {
+    if (!mode) return;
+    colorModeStorage.set(mode);
+  }, [mode]);
+
+  const theme = getTheme(mode);
+
+  const toggleMode = () => {
+    const i = (modes.indexOf(mode) + 1) % modes.length;
+    setMode(modes[i]);
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <AppProvider mode={mode} toggleMode={toggleMode}>
+        <AppNavigation />
+      </AppProvider>
+    </ThemeProvider>
+  );
+};
+
+export default AppWithProvider;
+```
+
+As an aside, if you’re using react-navigation in your app (which I’m sure most of you are), you may have noticed that by default any components you may be using — such as Tabs, etc. — don’t automatically switch color modes.
+Thankfully, react-navigation supports theming — you just have to tell your Navigator which theme to use. This can be done like so:
+
+```tsx
+const AppNavigation = createAppContainer(
+  createAnimatedSwitchNavigator(
+    {
+      LaunchScreen,
+      LoginStack,
+      HomeTabs,
+    },
+    {
+      initialRouteName: "LaunchScreen",
+    }
+  )
+);
+export default React.forwardRef(
+  (props, ref: React.LegacyRef<NavigationContainerComponent>) => {
+    const { mode } = useAppContext();
+    return (
+      <AppNavigation
+        ref={ref}
+        theme={mode === "default" ? "light" : "dark"}
+      />
+    );
+  }
+);
+```
+
+And that's it! Please share if you found this helpful.

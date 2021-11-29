@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 const Button = {
   // The styles all button have in common
@@ -39,8 +39,14 @@ const Button = {
   },
 };
 
+// 2. Add your color mode config
+const config: ThemeConfig = {
+  useSystemColorMode: true,
+};
+
 const theme = extendTheme({
   components: {
+    Button,
     IconButton: {
       baseStyle: {
         fontWeight: "bold",
@@ -58,6 +64,7 @@ const theme = extendTheme({
       },
     },
   },
+  config,
   colors: {
     brand: {
       50: "#FDF2F8 ",
