@@ -45,3 +45,26 @@ export const DOCK_ITEMS = [
     ariaLabel: "Twitter",
   },
 ];
+
+export const TOP_NAV_ITEMS = [
+  {
+    icon: RiImageLine,
+    label: "Photos",
+    href: "/photos",
+  },
+  {
+    icon: RiQuillPenLine,
+    label: "Writing",
+    href: "/writing",
+  },
+  {
+    icon: RiGithubLine,
+    label: "Projects",
+    href: "/projects",
+  },
+  {
+    icon: RiSettings2Line,
+    label: "Settings",
+    href: "/settings",
+  },
+];

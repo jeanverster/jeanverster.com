@@ -1,9 +1,12 @@
-import Link from "next/link";
-import { ReactHTMLElement } from "react";
+import { Link as ChakraLink } from "@chakra-ui/react";
+import Link, { LinkProps } from "next/link";
 
-export const Anchor: React.FC<
-  Partial<ReactHTMLElement<HTMLAnchorElement>["props"]>
-> = (props) => {
+type AnchorProps = {
+  href: string;
+  children: React.ReactNode;
+} & LinkProps;
+
+export const Anchor = (props: AnchorProps) => {
   const { href, children } = props;
 
   if (!href) {
@@ -12,7 +15,7 @@ export const Anchor: React.FC<
 
   return (
     <Link href={href} passHref={true}>
-      <a>{children}</a>
+      <ChakraLink>{children}</ChakraLink>
     </Link>
   );
 };

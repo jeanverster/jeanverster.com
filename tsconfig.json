@@ -26,10 +26,10 @@
       "@layouts/*": ["src/layouts/*"],
       "@mdx": ["src/mdx"],
       "@mdx/*": ["src/mdx/*"],
+      "@store": ["src/store"],
+      "@store/*": ["src/store/*"],
       "@types": ["src/types"],
-      "@types/*": ["src/types/*"],
-      "/public": ["/public"],
-      "/public/*": ["/public/*"]
+      "@types/*": ["src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

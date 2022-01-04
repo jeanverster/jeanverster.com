@@ -1,2 +1,2 @@
+export * from "./Article";
 export * from "./Page";
-export * from "./PostLayout";

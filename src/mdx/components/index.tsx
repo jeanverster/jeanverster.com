@@ -23,9 +23,33 @@ export const components = {
   },
   blockquote: BlockQuote,
   h1: function Headline(props: any) {
-    return <Heading fontWeight="bold" fontSize="3xl" {...props} />;
+    return (
+      <Heading
+        fontWeight="bold"
+        lineHeight="taller"
+        fontSize="4xl"
+        {...props}
+      />
+    );
   },
   h2: function Headline(props: any) {
-    return <Heading fontWeight="bold" fontSize="2xl" {...props} />;
+    return (
+      <Heading
+        fontWeight="bold"
+        lineHeight="taller"
+        fontSize="3xl"
+        {...props}
+      />
+    );
+  },
+  h3: function Headline(props: any) {
+    return (
+      <Heading
+        fontWeight="bold"
+        lineHeight="taller"
+        fontSize="2xl"
+        {...props}
+      />
+    );
   },
 };

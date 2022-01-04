@@ -95,9 +95,7 @@ export const getPost = async (slug: string) => {
       };
 
       options.publicPath = imagesUrl;
-      console.log(options.publicPath);
       options.write = true;
-      console.log(options);
       return options;
     },
     globals: {

@@ -1,4 +1,4 @@
-import { Page } from "@layouts";
+import { Article } from "@layouts";
 import { MDX } from "@mdx/client";
 import { getPost, getPosts } from "@mdx/server";
 import { FrontMatter } from "@types";
@@ -17,15 +17,14 @@ const PostDetail: NextPage<PostDetailProps> = (
   const { code, frontmatter } = props;
 
   return (
-    <Page
+    <Article
       title={frontmatter.title}
       description={frontmatter.description}
-      showBackButton
     >
       <main>
         <MDX source={code} />
       </main>
-    </Page>
+    </Article>
   );
 };
 
