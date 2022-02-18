@@ -9,6 +9,7 @@ type PageProps = FlexProps & {
   title: string;
   children: React.ReactNode;
   description: string;
+  hideTopTitle?: boolean;
   showBackButton?: boolean;
 };
 
@@ -16,6 +17,7 @@ export const Page = ({
   children,
   title,
   description,
+  hideTopTitle = false,
   showBackButton = false,
   ...rest
 }: PageProps): JSX.Element => {
@@ -24,7 +26,7 @@ export const Page = ({
   return (
     <Flex bg={bg} {...rest}>
       <Container
-        px={{ base: 8, md: 0 }}
+        px={{ base: 8, md: 2 }}
         pt={["96px", "12vmax", "12vmin"]}
         pb="128px"
         maxW="container.md"
@@ -39,9 +41,13 @@ export const Page = ({
           />
         )}
 
-        <Heading mb={4}>{title}</Heading>
-        <Text fontWeight="bold">{description}</Text>
-        <Box my={6} />
+        {!hideTopTitle && (
+          <>
+            <Heading mb={4}>{title}</Heading>
+            <Text fontWeight="bold">{description}</Text>
+            <Box my={6} />
+          </>
+        )}
         {children}
       </Container>
     </Flex>

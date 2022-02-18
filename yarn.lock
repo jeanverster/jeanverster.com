@@ -791,15 +791,15 @@
   resolved "https://registry.yarnpkg.com/@fal-works/esbuild-plugin-global-externals/-/esbuild-plugin-global-externals-2.1.2.tgz#c05ed35ad82df8e6ac616c68b92c2282bd083ba4"
   integrity sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==
 
-"@fontsource/josefin-sans@^4.5.0":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@fontsource/josefin-sans/-/josefin-sans-4.5.1.tgz#b5630018fce69a3a16680199b95ba993387f07ae"
-  integrity sha512-V8T4akR0P9/MnYJ/ati4bvFp5Wdf0LEioNPGlEe7hK6c2BRQ3leeTXu4bKZ475H4i81eR4Av7bFNMp1aUC3zww==
+"@fontsource/manrope@^4.5.0":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@fontsource/manrope/-/manrope-4.5.4.tgz#d43540bf02659f3db76382cbfc596e084491ce20"
+  integrity sha512-1yv/1wW3x3wOKNYfuWMQORpKflAqiSRWc5rG+LLalRJJhED9sUDvk/FYBnKtT9IXCJ/VuL//bz2+i+Z+rtjlbg==
 
-"@fontsource/lato@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-4.5.0.tgz#c248b083be330daafade76995fed9088d5b76c04"
-  integrity sha512-Y1qluoF+5b2U6MWcEz70+euZwl4TEV+9v7nZCmuRgNHb5McYc3VmbNmYNEiLsnb1HHwlAHA70P/LktP9EJ61ag==
+"@fontsource/sora@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/sora/-/sora-4.5.3.tgz#987c9b43acb00c9e3fa5377ebcedfd4ec9b760a7"
+  integrity sha512-0ipYkroLonvChAyLajgIt6mImXMhvjrHwD5g7iX2ZR1eJ4hLDnwq6haW5pSeehe79lPjgp0BX6ZHivFIP0xR2g==
 
 "@hapi/accept@5.0.2":
   version "5.0.2"

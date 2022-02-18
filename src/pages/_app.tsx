@@ -1,10 +1,10 @@
 import { ChakraProvider, Flex } from "@chakra-ui/react";
 import { Dock, TopNav } from "@components";
 import { DOCK_ITEMS, TOP_NAV_ITEMS } from "@config/nav";
-import "@fontsource/josefin-sans/400.css";
-import "@fontsource/josefin-sans/700.css";
-import "@fontsource/lato/400.css";
-import "@fontsource/lato/700.css";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/700.css";
+import "@fontsource/sora/400.css";
+import "@fontsource/sora/700.css";
 import { navAtom, NavType } from "@store";
 import { useAtomValue } from "jotai/utils";
 import { DefaultSeo } from "next-seo";
