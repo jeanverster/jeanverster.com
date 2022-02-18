@@ -1,11 +1,6 @@
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { Flex, FlexProps, Heading } from "@chakra-ui/layout";
-import {
-  Container,
-  Divider,
-  IconButton,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, FlexProps, Heading } from "@chakra-ui/layout";
+import { Container, IconButton, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
@@ -29,8 +24,8 @@ export const Page = ({
   return (
     <Flex bg={bg} {...rest}>
       <Container
-        px={[6, 0]}
-        pt={["12vmax", "12vmin"]}
+        px={{ base: 8, md: 0 }}
+        pt={["96px", "12vmax", "12vmin"]}
         pb="128px"
         maxW="container.md"
       >
@@ -46,7 +41,7 @@ export const Page = ({
 
         <Heading mb={4}>{title}</Heading>
         <Text fontWeight="bold">{description}</Text>
-        <Divider my={6} />
+        <Box my={6} />
         {children}
       </Container>
     </Flex>

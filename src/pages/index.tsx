@@ -1,3 +1,4 @@
+import { Flex, SimpleGrid } from "@chakra-ui/layout";
 import { Box, Heading } from "@chakra-ui/react";
 import { Page } from "@layouts";
 import { getPosts } from "@mdx/server";
@@ -9,6 +10,14 @@ import { PostCard } from "../components";
 type HomeProps = {
   posts: Post[];
 };
+
+const content = <Flex py={4}>Content</Flex>;
+
+const steps = [
+  { label: "Step 1", content },
+  { label: "Step 2", content },
+  { label: "Step 3", content },
+];
 
 export const getStaticProps: GetStaticProps<HomeProps> = () => {
   const posts = getPosts();
@@ -32,13 +41,15 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
         >
           Latest posts
         </Heading>
-        {posts.map((post) => (
-          <PostCard
-            slug={post.slug}
-            key={post.slug}
-            {...post.frontmatter}
-          />
-        ))}
+        <SimpleGrid columns={[1, 2]} spacing={10}>
+          {posts.map((post) => (
+            <PostCard
+              slug={post.slug}
+              key={post.slug}
+              {...post.frontmatter}
+            />
+          ))}
+        </SimpleGrid>
       </Box>
     </Page>
   );

@@ -1,3 +1,4 @@
+import { SimpleGrid } from "@chakra-ui/layout";
 import { PostCard } from "@components";
 import { Page } from "@layouts";
 import { getPosts } from "@mdx/server";
@@ -22,9 +23,11 @@ const Writing = ({ posts }: WritingProps): JSX.Element => {
       title="Writing"
       description="Blog posts and some assorted goodies."
     >
-      {posts.map(({ frontmatter, slug }) => (
-        <PostCard key={slug} {...frontmatter} slug={slug} />
-      ))}
+      <SimpleGrid columns={[1, 2]} spacing={10}>
+        {posts.map(({ frontmatter, slug }) => (
+          <PostCard key={slug} {...frontmatter} slug={slug} />
+        ))}
+      </SimpleGrid>
     </Page>
   );
 };
