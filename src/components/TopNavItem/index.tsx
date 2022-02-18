@@ -1,6 +1,6 @@
+import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Text } from "@chakra-ui/layout";
-import { Box, Flex, FlexProps } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Flex, FlexProps } from "@chakra-ui/react";
 import Link, { LinkProps } from "next/link";
 import React from "react";
 
@@ -22,6 +22,7 @@ export const TopNavItem = ({
   title,
   ...rest
 }: TopNavItemProps): JSX.Element => {
+  const color = useColorModeValue("gray.700", "gray.200");
   return (
     <Link
       {...{ href, as, replace, scroll, passHref, prefetch, shallow }}
@@ -32,7 +33,8 @@ export const TopNavItem = ({
         pos="relative"
         align="center"
         transition="all 0.2s ease"
-        opacity={active ? 1 : 0.8}
+        opacity={active ? 1 : 0.9}
+        color={active ? "blue.500" : color}
         _hover={{
           cursor: "pointer",
           opacity: 1,
@@ -43,19 +45,6 @@ export const TopNavItem = ({
         <Text fontSize="sm" fontWeight={600}>
           {title}
         </Text>
-        {active && (
-          <Box
-            left={0}
-            right={0}
-            bottom={-1}
-            height="2px"
-            bg="brand.500"
-            pos="absolute"
-            rounded="sm"
-            as={motion.div}
-            layoutId="underline"
-          />
-        )}
       </Flex>
     </Link>
   );

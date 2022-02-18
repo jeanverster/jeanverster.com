@@ -5,7 +5,6 @@ import {
 import {
   Box,
   Flex,
-  Radio,
   RadioGroup,
   Slider,
   SliderFilledTrack,
@@ -13,9 +12,11 @@ import {
   SliderTrack,
   Stack,
   Text,
+  useRadioGroup,
 } from "@chakra-ui/react";
-import { wallpaperAtom } from "@components";
+import { RadioCard, wallpaperAtom } from "@components";
 import { Page } from "@layouts";
+import { navAtom } from "@store";
 import { atom, useAtom } from "jotai";
 import { useAtomValue } from "jotai/utils";
 import * as React from "react";
@@ -31,7 +32,19 @@ const Settings = (props: SettingsProps): JSX.Element => {
   const wallpaper = useAtomValue(wallpaperAtom);
   const bg = useColorModeValue("blackAlpha.200", "whiteAlpha.200");
   const containerBg = useColorModeValue("gray.100", "gray.800");
+  const [navMode, setNavMode] = useAtom(navAtom);
   const { colorMode, setColorMode } = useColorMode();
+
+  const options = ["light", "dark"];
+
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: "color-mode",
+    defaultValue: colorMode,
+    onChange: setColorMode,
+  });
+
+  const group = getRootProps();
+
   return (
     <Page title="Settings" description="Update all the things.">
       <Flex flexDir="column">
@@ -77,13 +90,15 @@ const Settings = (props: SettingsProps): JSX.Element => {
           defaultValue={colorMode}
           onChange={setColorMode}
         >
-          <Stack direction="row">
-            <Radio colorScheme="brand" value="dark">
-              Dark
-            </Radio>
-            <Radio colorScheme="brand" value="light">
-              Light
-            </Radio>
+          <Stack {...group} direction="row">
+            {options.map((value) => {
+              const radio = getRadioProps({ value });
+              return (
+                <RadioCard key={value} {...radio}>
+                  {value}
+                </RadioCard>
+              );
+            })}
           </Stack>
         </RadioGroup>
       </Flex>
