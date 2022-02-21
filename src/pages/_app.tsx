@@ -9,10 +9,12 @@ import { navAtom, NavType } from "@store";
 import { useAtomValue } from "jotai/utils";
 import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
+import * as React from "react";
 import theme from "../theme";
 
 function App({ Component, pageProps }: AppProps) {
   const nav = useAtomValue(navAtom);
+
   return (
     <ChakraProvider theme={theme}>
       <DefaultSeo />

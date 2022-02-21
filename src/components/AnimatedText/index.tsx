@@ -19,7 +19,7 @@ const AnimatedText = ({
     visible: {
       transition: {
         delayChildren: delay,
-        staggerChildren: 0.045,
+        staggerChildren: 0.025,
       },
     },
   };

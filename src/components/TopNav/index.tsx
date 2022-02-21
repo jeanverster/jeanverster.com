@@ -27,7 +27,7 @@ export const TopNav = ({ items }: TopNavProps): JSX.Element => {
       width="100vw"
       position="fixed"
     >
-      <Container px={{ base: 8, md: 0 }} maxW="container.md">
+      <Container px={{ base: 8, md: 2 }} maxW="container.md">
         <Flex
           as="nav"
           flex={1}

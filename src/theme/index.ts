@@ -41,12 +41,12 @@ const Button = {
 
 // 2. Add your color mode config
 const config: ThemeConfig = {
+  initialColorMode: "system",
   useSystemColorMode: true,
 };
 
 const theme = extendTheme({
   components: {
-    Button,
     IconButton: {
       baseStyle: {
         fontWeight: "bold",

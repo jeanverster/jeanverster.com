@@ -6,6 +6,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { MotionFlex } from "@components";
 import { useDockAnimation } from "@hooks";
 import { motion, MotionValue, Variants } from "framer-motion";
 import { useAtomValue } from "jotai/utils";
@@ -20,6 +21,7 @@ type DockItemProps = FlexProps & {
     label: string;
     href: string;
   };
+  active: boolean;
   mouseX: MotionValue<number | null>;
 };
 
@@ -40,6 +42,7 @@ const variants: Variants = {
 const DockItem = ({
   item,
   mouseX,
+  active,
   ...rest
 }: DockItemProps): JSX.Element => {
   const el = React.useRef<HTMLImageElement>(null);
@@ -63,7 +66,7 @@ const DockItem = ({
     >
       <Link href={item.href} passHref>
         <MotionButton
-          px={0}
+          px={3}
           ref={el}
           bg={bg}
           style={{
@@ -82,7 +85,7 @@ const DockItem = ({
           initial="hidden"
           animate="hidden"
           position="relative"
-          sx={{ "& svg": { width: "50%", height: "50%" } }}
+          sx={{ "& svg": { width: "80%", height: "80%" } }}
           {...rest}
         >
           <MotionFlex
@@ -101,6 +104,18 @@ const DockItem = ({
             </Text>
           </MotionFlex>
           <Icon />
+
+          {active && (
+            <MotionFlex
+              width="4px"
+              layoutId="active-indicator"
+              height="4px"
+              rounded="full"
+              bg={tooltipBg}
+              position="absolute"
+              bottom="12%"
+            />
+          )}
         </MotionButton>
       </Link>
     </MotionFlex>

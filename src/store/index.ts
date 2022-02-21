@@ -1,8 +1,10 @@
 import { atom } from "jotai";
 
 export enum NavType {
-  DOCK = "DOCK",
-  DEFAULT = "DEFAULT",
+  DOCK = "Dock",
+  DEFAULT = "Classic",
 }
 
-export const navAtom = atom<NavType>(NavType.DEFAULT);
+export const navAtom = atom<NavType>(NavType.DOCK);
+
+export const initAtom = atom(false);

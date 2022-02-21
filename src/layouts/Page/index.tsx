@@ -1,9 +1,12 @@
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, FlexProps, Heading } from "@chakra-ui/layout";
-import { Container, IconButton, Text } from "@chakra-ui/react";
+import { Container, IconButton } from "@chakra-ui/react";
+import { MotionFlex } from "@components";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { RiArrowGoBackFill } from "react-icons/ri";
+import AnimatedText from "../../components/AnimatedText/index";
+import { fadeUp } from "../../utils";
 
 type PageProps = FlexProps & {
   title: string;
@@ -43,8 +46,15 @@ export const Page = ({
 
         {!hideTopTitle && (
           <>
-            <Heading mb={4}>{title}</Heading>
-            <Text fontWeight="bold">{description}</Text>
+            <MotionFlex {...fadeUp(0)}>
+              <AnimatedText
+                tag={Heading}
+                text={title}
+                color="brand.500"
+                fontSize={["2xl", "5xl"]}
+              />
+            </MotionFlex>
+            {/* <Text fontSize="lg">{description}</Text> */}
             <Box my={6} />
           </>
         )}

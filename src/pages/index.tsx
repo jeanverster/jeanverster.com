@@ -3,10 +3,13 @@ import { Box, Heading, Link, Text } from "@chakra-ui/react";
 import { MotionFlex, PostCard } from "@components";
 import { Page } from "@layouts";
 import { getPosts } from "@mdx/server";
+import { initAtom } from "@store";
 import { Post } from "@types";
 import { fadeUp } from "@utils";
+import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { GetStaticProps } from "next";
+import { useCallback } from "react";
 import AnimatedText from "../components/AnimatedText";
 
 type HomeProps = {
@@ -29,6 +32,17 @@ export const getStaticProps: GetStaticProps<HomeProps> = () => {
 };
 
 const Home: NextPage<HomeProps> = ({ posts }) => {
+  const [init, setInit] = useAtom(initAtom);
+  console.log("init", init);
+
+  const buildAnimation = useCallback((delay: number) => {
+    if (!init) {
+      return fadeUp(delay);
+    }
+    return {};
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Page hideTopTitle>
       <Flex
@@ -41,38 +55,27 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           width: "100%",
         }}
       >
-        <MotionFlex {...fadeUp(0)}>
-          <AnimatedText
-            textAlign="left"
-            fontWeight="lighter"
-            fontSize="md"
-            tag={Heading}
-            mb={0}
-            text="Hi, my name is"
-          />
+        <MotionFlex {...buildAnimation(0)}>
+          <Text fontSize="lg">Hi, my name is</Text>
         </MotionFlex>
+        <AnimatedText
+          fontSize={["3xl", "5xl"]}
+          my={2}
+          tag={Heading}
+          color="brand.500"
+          text="Jean Verster."
+        />
 
-        <MotionFlex {...fadeUp(0.25)}>
-          <AnimatedText
-            fontSize="6xl"
-            mb={4}
-            mt={4}
-            tag={Heading}
-            delay={0.9}
-            color="brand.500"
-            text="Jean Verster,"
-          />
-        </MotionFlex>
-        <MotionFlex {...fadeUp(1.95)}>
-          <Heading fontSize="4xl">
+        <MotionFlex {...buildAnimation(0.95)}>
+          <Heading fontSize={["2xl", "3xl"]}>
             I build experiences for the modern web.
           </Heading>
         </MotionFlex>
-        <MotionFlex {...fadeUp(2.25)}>
-          <Text mt={8}>
+        <MotionFlex {...buildAnimation(1.15)}>
+          <Text fontSize="lg" mt={8} maxW={["100%", "80%"]}>
             I&apos;m a senior frontend engineer with a passion for
             high quality software and a love for the web. Currently,
-            I'm working to allow startup employees to own their
+            I&apos;m working to allow startup employees to own their
             options at
             <Link
               color="brand.500"
@@ -88,7 +91,12 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
         </MotionFlex>
       </Flex>
       <Box pt={4}>
-        <MotionFlex {...fadeUp(3)}>
+        {/* Set init value to true to prevent the animation from running again */}
+        <MotionFlex
+          onAnimationComplete={() => setInit(true)}
+          flexDir="column"
+          {...buildAnimation(1.3)}
+        >
           <Heading
             mb={4}
             fontSize="2xl"
@@ -97,8 +105,6 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           >
             Latest posts
           </Heading>
-        </MotionFlex>
-        <MotionFlex {...fadeUp(3.45)}>
           <SimpleGrid columns={[1, 2]} spacing={10}>
             {posts.map((post) => (
               <PostCard

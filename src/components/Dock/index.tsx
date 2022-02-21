@@ -1,10 +1,16 @@
 import { FlexProps } from "@chakra-ui/layout";
 import { Flex, useColorModeValue } from "@chakra-ui/react";
-import { motion, useMotionValue } from "framer-motion";
+import {
+  AnimateSharedLayout,
+  motion,
+  useMotionValue,
+} from "framer-motion";
 import { useAtomValue } from "jotai/utils";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { IconType } from "react-icons";
 import { sizeAtom } from "../../pages/settings";
+import { initAtom } from "../../store/index";
 import DockItem from "../DockItem/DockItem";
 
 type DockProps = {
@@ -19,17 +25,25 @@ const MotionFlex = motion<FlexProps>(Flex);
 
 export const Dock = ({ items }: DockProps): JSX.Element => {
   const bg = useColorModeValue("blackAlpha.200", "whiteAlpha.200");
+  const init = useAtomValue(initAtom);
 
   const x = useMotionValue<number | null>(null);
 
   const size = useAtomValue(sizeAtom);
+
+  const router = useRouter();
 
   return (
     <MotionFlex
       initial={{ y: 200 }}
       animate={{ y: 0 }}
       // @ts-ignore
-      transition={{ type: "spring", stiffness: 80, damping: 20 }}
+      transition={{
+        type: "spring",
+        stiffness: 80,
+        damping: 14,
+        delay: init ? 0 : 1.2,
+      }}
       sx={{
         bg,
         p: 2,
@@ -56,16 +70,20 @@ export const Dock = ({ items }: DockProps): JSX.Element => {
       onMouseMove={({ clientX }) => x.set(clientX)}
     >
       <Flex height="100%" alignItems="flex-end">
-        {items.map((item, i) => {
-          return (
-            <DockItem
-              mouseX={x}
-              item={item}
-              key={item.href}
-              mr={i < items.length - 1 ? 2 : 0}
-            />
-          );
-        })}
+        <AnimateSharedLayout key="active-indicator">
+          {items.map((item, i) => {
+            const active = router.pathname === item.href;
+            return (
+              <DockItem
+                mouseX={x}
+                item={item}
+                key={item.href}
+                active={active}
+                mr={i < items.length - 1 ? 2 : 0}
+              />
+            );
+          })}
+        </AnimateSharedLayout>
       </Flex>
     </MotionFlex>
   );

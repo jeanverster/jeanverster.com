@@ -15,12 +15,6 @@ export const DOCK_ITEMS = [
     ariaLabel: "Home",
   },
   {
-    icon: RiImageLine,
-    label: "Photos",
-    href: "/photos",
-    ariaLabel: "Photos",
-  },
-  {
     icon: RiQuillPenLine,
     label: "Writing",
     href: "/writing",

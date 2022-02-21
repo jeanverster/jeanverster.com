@@ -66,7 +66,7 @@ export const PostCard = ({
         <Text mt={1} mb={2} fontSize="xs" fontWeight="bold">
           {date}
         </Text>
-        <Text fontSize="lg" lineHeight="taller" mt={2} mb={4}>
+        <Text fontSize="lg" mt={2} mb={4}>
           {description}
         </Text>
         <Link href={`/writing/${slug}`} passHref>
