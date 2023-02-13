@@ -5,12 +5,11 @@ import { Page } from "@layouts";
 import { getPosts } from "@mdx/server";
 import { initAtom } from "@store";
 import { Post } from "@types";
-import { fadeUp } from "@utils";
-import { useAtom } from "jotai";
+import { useUpdateAtom } from "jotai/utils";
 import type { NextPage } from "next";
 import { GetStaticProps } from "next";
-import { useCallback } from "react";
 import AnimatedText from "../components/AnimatedText";
+import { useFadeAnimation } from "../hooks";
 
 type HomeProps = {
   posts: Post[];
@@ -32,19 +31,10 @@ export const getStaticProps: GetStaticProps<HomeProps> = () => {
 };
 
 const Home: NextPage<HomeProps> = ({ posts }) => {
-  const [init, setInit] = useAtom(initAtom);
-  console.log("init", init);
-
-  const buildAnimation = useCallback((delay: number) => {
-    if (!init) {
-      return fadeUp(delay);
-    }
-    return {};
-    // eslint-disable-next-line
-  }, []);
-
+  const setInit = useUpdateAtom(initAtom);
+  const index = posts.length % 2 === 0 ? 1 : 2;
   return (
-    <Page hideTopTitle>
+    <Page title="Home" hideTopTitle>
       <Flex
         sx={{
           display: "flex",
@@ -55,7 +45,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           width: "100%",
         }}
       >
-        <MotionFlex {...buildAnimation(0)}>
+        <MotionFlex {...useFadeAnimation(0)}>
           <Text fontSize="lg">Hi, my name is</Text>
         </MotionFlex>
         <AnimatedText
@@ -66,12 +56,12 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           text="Jean Verster."
         />
 
-        <MotionFlex {...buildAnimation(0.95)}>
+        <MotionFlex {...useFadeAnimation(0.95)}>
           <Heading fontSize={["2xl", "3xl"]}>
             I build experiences for the modern web.
           </Heading>
         </MotionFlex>
-        <MotionFlex {...buildAnimation(1.15)}>
+        <MotionFlex {...useFadeAnimation(1.15)}>
           <Text fontSize="lg" mt={8} maxW={["100%", "80%"]}>
             I&apos;m a senior frontend engineer with a passion for
             high quality software and a love for the web. Currently,
@@ -95,7 +85,7 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
         <MotionFlex
           onAnimationComplete={() => setInit(true)}
           flexDir="column"
-          {...buildAnimation(1.3)}
+          {...useFadeAnimation(1.3)}
         >
           <Heading
             mb={4}
@@ -105,7 +95,33 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           >
             Latest posts
           </Heading>
-          <SimpleGrid columns={[1, 2]} spacing={10}>
+          <SimpleGrid
+            columns={[1, 2]}
+            spacing={10}
+            sx={{
+              ".post-card": {
+                borderBottomWidth: 1,
+              },
+              // last 2 children
+              ".post-card:nth-last-child(-n+2)": {
+                borderBottomWidth: 0,
+              },
+            }}
+          >
+            {posts.map((post) => (
+              <PostCard
+                slug={post.slug}
+                key={post.slug}
+                {...post.frontmatter}
+              />
+            ))}
+            {posts.map((post) => (
+              <PostCard
+                slug={post.slug}
+                key={post.slug}
+                {...post.frontmatter}
+              />
+            ))}
             {posts.map((post) => (
               <PostCard
                 slug={post.slug}

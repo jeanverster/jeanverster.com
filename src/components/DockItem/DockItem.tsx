@@ -2,7 +2,6 @@ import { FlexProps } from "@chakra-ui/layout";
 import {
   Button,
   ButtonProps,
-  Flex,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -26,7 +25,7 @@ type DockItemProps = FlexProps & {
 };
 
 const MotionButton = motion<ButtonProps>(Button);
-const MotionFlex = motion<FlexProps>(Flex);
+// const MotionFlex = motion<FlexProps>(Flex);
 
 const variants: Variants = {
   hidden: {

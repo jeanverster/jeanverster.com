@@ -2,7 +2,6 @@ import { Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { FrontMatter } from "@types";
 import Image from "next/image";
 import Link from "next/link";
-import * as React from "react";
 import { MotionFlex } from "../MotionFlex/index";
 
 type PostCardProps = FrontMatter & { slug: string };
@@ -23,6 +22,7 @@ export const PostCard = ({
       }}
       flexDir="column"
       mb={8}
+      className="post-card"
     >
       {!!cover && (
         <Link href={`/writing/${slug}`} passHref>

@@ -1,7 +1,6 @@
 import {
   RiGithubLine,
   RiHome2Line,
-  RiImageLine,
   RiQuillPenLine,
   RiSettings2Line,
   RiTwitterLine,
@@ -41,11 +40,6 @@ export const DOCK_ITEMS = [
 ];
 
 export const TOP_NAV_ITEMS = [
-  {
-    icon: RiImageLine,
-    label: "Photos",
-    href: "/photos",
-  },
   {
     icon: RiQuillPenLine,
     label: "Writing",

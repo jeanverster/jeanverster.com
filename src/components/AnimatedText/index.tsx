@@ -9,6 +9,25 @@ type AnimatedTextProps = HeadingProps & {
   delay?: number;
 };
 
+const item = {
+  hidden: {
+    y: "200%",
+
+    transition: {
+      ease: [0.455, 0.03, 0.515, 0.955],
+      duration: 0.85,
+    },
+  },
+  visible: {
+    y: 0,
+
+    transition: {
+      ease: [0.455, 0.03, 0.515, 0.955],
+      duration: 0.65,
+    },
+  },
+};
+
 const AnimatedText = ({
   tag: Tag,
   text,
@@ -20,25 +39,6 @@ const AnimatedText = ({
       transition: {
         delayChildren: delay,
         staggerChildren: 0.025,
-      },
-    },
-  };
-
-  const item = {
-    hidden: {
-      y: "200%",
-
-      transition: {
-        ease: [0.455, 0.03, 0.515, 0.955],
-        duration: 0.85,
-      },
-    },
-    visible: {
-      y: 0,
-
-      transition: {
-        ease: [0.455, 0.03, 0.515, 0.955],
-        duration: 0.65,
       },
     },
   };

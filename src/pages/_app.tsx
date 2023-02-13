@@ -9,7 +9,6 @@ import { navAtom, NavType } from "@store";
 import { useAtomValue } from "jotai/utils";
 import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
-import * as React from "react";
 import theme from "../theme";
 
 function App({ Component, pageProps }: AppProps) {
@@ -17,7 +16,20 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
-      <DefaultSeo />
+      <DefaultSeo
+        titleTemplate="%s | Jean Verster"
+        openGraph={{
+          type: "website",
+          locale: "en_IE",
+          url: "https://www.jeanverster.com/",
+          site_name: "jeanverster.com",
+        }}
+        twitter={{
+          handle: "@jeanverster",
+          site: "@site",
+          cardType: "summary_large_image",
+        }}
+      />
       <Component {...pageProps} />
       {nav === NavType.DEFAULT ? (
         <TopNav items={TOP_NAV_ITEMS} />
